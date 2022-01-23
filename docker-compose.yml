@@ -9,13 +9,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres_password
 
-  server:
+  api:
     restart: always
     build:
       dockerfile: Dockerfile.dev
       context: ./server
-    ports:
-      - "3000:8080"
     volumes:
       - /app/node_modules
       - ./server:/app
@@ -47,3 +45,14 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3000:80'
