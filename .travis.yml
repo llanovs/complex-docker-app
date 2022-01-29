@@ -1,0 +1,38 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t gloria101987/app -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run gloria101987/app npm test -- --coverage
+
+after_success:
+  - docker build -t gloria101987/app-client ./client
+  - docker build -t gloria101987/app-nginx ./nginx
+  - docker build -t gloria101987/app-server ./server
+  - docker build -t gloria101987/app-worker ./worker
+
+# Log in into docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+# Add those images to the docker hub
+  - docker push gloria101987/app-client
+  - docker push gloria101987/app-nginx
+  - docker push gloria101987/app-server
+  - docker push gloria101987/app-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "docker-app"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-39383838"
+  bucket_path: "docker-app"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
