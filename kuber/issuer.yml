@@ -1,11 +1,14 @@
-apiVersion: certmanager.k8s.io/v1alpha1
-kind: ClusterIssuer
+apiVersion: cert-manager.io/v1
+
+kind: Certificate
 metadata:
-  name: letsencrypt-prod
+  name: yourdomain-com-tls
 spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: 'blabla@gmail.com'
-    privateKeySecretRef:
-      name: letsencrypt-prod
-    http01: {}
+  secretName: yourdomain-com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: yourdomain.com
+  dnsNames:
+    - yourdomain.com
+    - www.yourdomain.com
