@@ -33,3 +33,7 @@ deploy:
   kubectl:
     manifests:
       - kuber/client-deployment.yml
+      - kuber/server-deployment.yml
+      - kuber/worker-deployment.yml
+      - kuber/client-cluster-ip-service.yml
+      - kuber/server-cluster-ip-service.yml
