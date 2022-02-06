@@ -2,12 +2,12 @@ version: '3'
 
 services:
   client:
-    image: "gloria101987/app-client"
+    image: "stephengrider/multi-client"
     mem_reservation: 128m
     hostname: client
 
   server:
-    image: "gloria101987/app-server"
+    image: "stephengrider/multi-server"
     mem_reservation: 128m
     hostname: api
     environment:
@@ -20,7 +20,7 @@ services:
       - PGPORT=$PGPORT
 
   worker:
-    image: "gloria101987/app-worker"
+    image: "stephengrider/multi-worker"
     mem_reservation: 128m
     hostname: worker
     environment:
@@ -28,7 +28,7 @@ services:
       - REDIS_PORT=$REDIS_PORT
 
   nginx:
-    image: "gloria101987/app-nginx"
+    image: "stephengrider/multi-nginx"
     mem_reservation: 128m
     hostname: nginx
     ports:

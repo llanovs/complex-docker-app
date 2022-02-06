@@ -4,7 +4,8 @@ metadata:
   name: client-deployment
 
 spec:
-  replicas: 1
+  replicas: 3
+
   selector:
     matchLabels:
       component: web
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: gloria101987/multi-client
+          image: stephengrider/multi-client
           ports:
             - containerPort: 3000
 
