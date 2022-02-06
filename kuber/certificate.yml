@@ -12,3 +12,10 @@ spec:
   dnsNames:
     - yourdomain.com
     - www.yourdomain.com
+  acme:
+    config:
+      - http01:
+        ingressClass: nginx
+      domains:
+        - yourdomain.com
+        - www.yourdomain.com
